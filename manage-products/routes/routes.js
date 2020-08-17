@@ -6,20 +6,44 @@ const express = require("express");
 // You define routing using methods of the Express app object that correspond to HTTP methods.
 
 const router = express.Router();
-
+const product = require("./../model/product");
 // retrieving products list
 router.get("/products", (req, res, next) => {
-  res.send("<h1>Retrieving the products list</h1>");
+  //   res.send("<h1>Retrieving the products list</h1>");
+  product.find({}, function (err, products) {
+    if (err) throw err;
+    res.json(products);
+  });
 });
 
 // add product
 router.post("/product", (req, res, next) => {
   // logic to add product
+  let newProduct = new product({
+    prodId: req.body.prodId,
+    prodName: req.body.prodName,
+    price: req.body.price,
+  });
+  newProduct.save((err, product) => {
+    console.log("routes->save(): product : ", product);
+    if (err) {
+      res.json({ msg: "Failed to add Product" });
+    } else {
+      res.json({ msg: "Product added successfully...!" });
+    }
+  });
 });
 
 // delete product
 router.delete("/product/:id", (req, res, next) => {
   //logic to delete product
+  Product.remove({ _id: req.params.id }, function (err, result) {
+    if (err) {
+      res.json(err);
+    } else {
+      res.json(result);
+    }
+  });
 });
 
 module.exports = router;
