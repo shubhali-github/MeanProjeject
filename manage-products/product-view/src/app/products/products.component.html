@@ -24,6 +24,9 @@
                 <td>{{ product.prodId }}</td>
                 <td>{{ product.prodName }}</td>
                 <td>{{ product.price }}</td>
+                <td>
+                    <input type="button" (click)="deleteProduct(product)" value=" X " class="waves-effect waves-light btn right" />
+                </td>
             </tr>
         </table>
     </div>
