@@ -19,4 +19,7 @@ export class ProductsService {
     deleteProduct(id) {
         return this.http.delete('http://localhost:3000/api/product/' + id);
     }
+    updateProduct(id, product) {
+        return this.http.put('http://localhost:3000/api/product/' + id, product);
+    }
 }

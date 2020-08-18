@@ -51,7 +51,7 @@ router.put("/product/:id", (req, res, next) => {
   console.log("req", req.body);
   // logic to update product
 
-  Product.findOne({ _id: req.params.id }, function (err, product) {
+  product.findOne({ _id: req.params.id }, function (err, product) {
     if (err) {
       res.json(err);
     } else {

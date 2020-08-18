@@ -14,8 +14,9 @@ export class ProductsComponent implements OnInit {
   prodId: String;
   prodName: String;
   price: String;
-  indes:number;
-  _id:any;
+  op = true;
+  index: number;
+  _id: any;
 
   constructor(private productsService: ProductsService) {}
 
@@ -71,5 +72,37 @@ export class ProductsComponent implements OnInit {
 
             this.products.splice(index, 1);
         });
+    }
+
+    editProduct(product) {
+        this.op = false;
+        this.index = this.products.indexOf(product);
+        this._id = product._id;
+        this.prodId = product.prodId;
+        this.prodName = product.prodName;
+        this.price = product.price;
+    }
+
+    updateProduct() {
+        this.op = true;
+        console.log(' index : ', this.index);
+
+        const newProduct = {
+            prodId: this.prodId,
+            prodName: this.prodName,
+            price: this.price,
+        };
+        console.log('newProduct', newProduct);
+        console.log('this._id ', this._id);
+
+        this.productsService
+            .updateProduct(this._id, newProduct)
+            .subscribe((product) => {
+                console.log(' putProduct -> product : ', product);
+                this.products.splice(this.index, 1, product);
+            });
+        this.prodId = '';
+        this.prodName = '';
+        this.price = '';
     }
 }
